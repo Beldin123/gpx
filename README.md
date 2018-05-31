@@ -14,5 +14,3 @@ The two lines which must be changed in gpx.go are:
 #cgo LDFLAGS: -LD:/pk_cplex/include -lcplex1271
 
 #include <D:/pk_cplex/include/ilcplex/cplex.h>
-
-The doc can be found at: [gpx_doc](https:/github.com/Beldin123/gpx.go)
