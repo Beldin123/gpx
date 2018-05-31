@@ -15,4 +15,4 @@ The two lines which must be changed in gpx.go are:
 
 #include <D:/pk_cplex/include/ilcplex/cplex.h>
 
-The doc can be found at: [gpx_doc](https://godoc.org/github.com/Beldin123/gpx.go)
+The doc can be found at: [gpx_doc](https:/github.com/Beldin123/gpx.go)
