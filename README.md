@@ -22,4 +22,10 @@ The two lines which must be changed in gpx.go are:
 The subdirectory gpxrun contains the executable which illustrates the functionality of the
 gpx package and how it can be used to solve LP and MILP problems via Cplex. The executable
 also includes a wrapper which can be used to independently exercise each function exported
-by gpx.
+by gpx. 
+
+Text files contained in the directory provide input data to solve 2 LP and 2 MILP
+problems. One set of files uses the standard MPS format, and a second set of files uses
+a special format understood by gpx to populate the internal data structures in the absence
+of a more convenient mechanism such as user-defined functions, or translation functions provided
+by lpo.
