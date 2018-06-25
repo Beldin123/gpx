@@ -1,0 +1,30 @@
+* CPLEX C interface test
+*
+*  OBJ:   X01 + 2*X02 + 3*X03  =  z   OBJ, maximize
+*  R01:  -X01 +   X02 +   X03  < 20   R01
+*  R02:   X01 - 3*X02 +   X03  < 30   R02
+*
+* Bounds:
+* 0 <= X01 <= 40
+*
+* OBJ = -202.5
+* X01 = 40, X02 = 17.5, X03 = 42.5
+
+NAME          CPLEXTEST
+ROWS
+ N  OBJ
+ L  R01
+ L  R02
+
+COLUMNS
+    X01       OBJ                 -1   R01                 -1
+    X01       R02                  1
+    X02       OBJ                 -2   R01                  1
+    X02       R02                 -3     
+    X03       OBJ                 -3   R01                  1
+    X03       R02                  1
+RHS
+    RHS1      R01                 20   R02                 30
+BOUNDS
+ UP BND1      X01                 40
+ENDATA

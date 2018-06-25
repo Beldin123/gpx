@@ -1,0 +1,44 @@
+* mipex1.c example
+*
+*      Maximize
+*       obj:  x1 + 2 x2 + 3 x3 +   x4
+*      Subject To
+*      R01: - x1 +   x2 +   x3 + 10x4  <= 20
+*      R02:   x1 - 3 x2 +   x3         <= 30
+*      R03:          x2       - 3.5x4   = 0
+*      Bounds
+*       0 <= x1 <= 40
+*       2 <= x4 <= 3
+*      Integers
+*        x4
+*      End
+
+
+
+
+
+NAME           mipex1
+ROWS
+ N  OBJ
+ L  R01
+ L  R02
+ E  R03
+COLUMNS
+    X1        OBJ                 -1   R01                 -1
+    X2        OBJ                 -2   R01                  1
+    X2        R02                 -3   R03                  1
+    X3        OBJ                 -3   R01                  1
+    X3        R02                  1
+    MARK0000  'MARKER'                 'INTORG'
+    X4        OBJ                 -1   R01                 10
+    X4        R03               -3.5
+    MARK0001  'MARKER'                 'INTEND'
+RHS
+    rhs       R01                 20   R02                 30
+    rhs       R03                  0
+BOUNDS
+ LO bnd       X1                   0
+ UP bnd       X1                  40
+ LO bnd       X4                   2
+ UP bnd       X4                   3
+ENDATA
