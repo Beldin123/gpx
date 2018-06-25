@@ -1,4 +1,4 @@
-##Package GPX
+### Package GPX
 
 Package GPX provides a Go language suite of tools for using a subset of callable C functions available for the
 Cplex solver. 
