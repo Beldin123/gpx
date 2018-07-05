@@ -11,6 +11,10 @@ functions they call.
 The CPX function(s) called are listed in the comments section of the
 relevant gpx function calling them. Please refer to the CPLEX documentation for details 
 (https://www.ibm.com/support/knowledgecenter/en/SSSA5P_12.4.0/ilog.odms.cplex.help/CPLEX/maps/CPLEX_1.html).
+
+The executable provided with the package illustrates how the gpx package can be
+used and contains an exerciser to allow each function to be tested independently.
+
 */
 package gpx
 
