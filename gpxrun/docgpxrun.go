@@ -1,6 +1,6 @@
 /* 
 
-Executable provides examples of gpx use and wrapper for exported functions.
+Executable provides examples of gpx use and exerciser for exported functions.
 
 SUMMARY
 
@@ -8,7 +8,7 @@ SUMMARY
 This executable provides examples of how the gpx package can be used to solve 
 linear programming (LP) and mixed integer linear programming (MIP) problems
 via Cplex and the callable C routines.
-It also provides a wrapper to individually call and test each function exported by gpx.
+It also provides an exerciser to individually call and test each function exported by gpx.
 
 The user must select one of the provided options to perform the desired task.
 The options are grouped into a set of commands which illustrate main gpx functionality
@@ -25,7 +25,7 @@ The options are grouped into a set of commands which illustrate main gpx functio
 and a set of toggles which controls program behaviour as follows:
 
 	c - toggle customized user environment
-	g - toggle gpx function wrapper
+	g - toggle gpx function exerciser
 
 To select an option, enter the corresponding letter or number when prompted.
 
@@ -183,7 +183,7 @@ to that name. The default values are:
 
 Caution is advised if using a custom environment.
 
-FUNCTION WRAPPER
+FUNCTION EXERCISER
 
 This section lists the options used to exercise individual gpx functions. Please
 refer to the main documentation for details on function input, output, and behaviour.

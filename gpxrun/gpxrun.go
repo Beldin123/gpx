@@ -558,7 +558,7 @@ func runMainWrapper() {
 
 	// Print header and options, and enter infinite loop until user quits.
 
-	fmt.Println("\nTUTORIAL AND WRAPPER FOR GPX FUNCTIONS.")
+	fmt.Println("\nTUTORIAL AND EXERCISER FOR GPX FUNCTIONS.")
 	printOptions()
 	
 	for {
