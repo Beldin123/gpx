@@ -29,3 +29,11 @@ problems. One set of files uses the standard MPS format, and a second set of fil
 a special format understood by gpx to populate the internal data structures in the absence
 of a more convenient mechanism such as user-defined functions, or translation functions provided
 by lpo.
+
+### Installation and Use
+
+To install the package on a Windows platform, go to the cmd.exe window and enter the command:
+
+go get -u github.com/go-opt/gpx
+
+When installed, build the package and run the executable gpxrun to see the examples of how this package can be used, or to exercise each of the exported functions.
