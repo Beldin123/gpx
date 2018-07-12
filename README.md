@@ -17,6 +17,12 @@ The two lines which must be changed in gpx.go are:
 
 #include <D:/pk_cplex/include/ilcplex/cplex.h>
 
+In addition to Cplex, another dependency for this package is the github.com/pkg/errors package which must be
+downloaded and imported using the statement
+
+import github.com/pk/errors
+
+
 ### Executable gpxrun
 
 The subdirectory gpxrun contains the executable which illustrates the functionality of the
