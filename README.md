@@ -20,7 +20,7 @@ The two lines which must be changed in gpx.go are:
 In addition to Cplex, another dependency for this package is the github.com/pkg/errors package which must be
 downloaded and imported using the statement
 
-import github.com/pk/errors
+import github.com/pkg/errors
 
 
 ### Executable gpxrun
