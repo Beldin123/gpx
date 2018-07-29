@@ -1,21 +1,6 @@
-/*
-Package gpx provides an interface to a small subset of CPX (C language) functions 
-available in the CPLEX Callable Library. This package also requires a copy of Cplex
-and a C compiler to be installed and configured.
+// 01   July  5, 2018   Initial version uploaded to github
+// 02   July 29, 2018   Moved comments to separate doc file
 
-The naming convention for gpx functions tries to match the underlying CPX function name as
-closely as possible (e.g. gpx.LpOpt calls CPXlpopt). In some cases, it was not possible
-and/or practical to have a one-for-one correspondence between gpx functions and the CPX
-functions they call. 
-
-The CPX function(s) called are listed in the comments section of the
-relevant gpx function calling them. Please refer to the CPLEX documentation for details 
-(https://www.ibm.com/support/knowledgecenter/en/SSSA5P_12.4.0/ilog.odms.cplex.help/CPLEX/maps/CPLEX_1.html).
-
-The executable provided with the package illustrates how the gpx package can be
-used and contains an exerciser to allow each function to be tested independently.
-
-*/
 package gpx
 
 /*
@@ -512,7 +497,6 @@ int cCloseCplex() {
 import "C"
 
 import (
-//	"fmt"
 	"github.com/pkg/errors"
 	"unsafe"
 )
@@ -583,7 +567,7 @@ type SolnCol struct {
 // In case of failure, it returns an error including the error code it received from Cplex. 
 // This function uses CPXopenCPLEX, CPXsetintparam, and CPXcreateprob.
 func CreateProb(Name string) error {
-	var status C.int
+	var status C.int      // Status returned from Cplex
 
 	if Name == "" {
 		Name = "DefaultName"
@@ -617,8 +601,7 @@ func CreateProb(Name string) error {
 // passed to this function is "true", or CPX_OFF if false. By default, output is not
 // printed to the screen.
 func OutputToScreen(echoOn bool) error {
-
-	var status, cEchoState C.int
+	var status, cEchoState C.int  // Status returned from Cplex
 
 	// CPX_ON = 1, CPX_OFF = 0, but unfortunately we can't call these constants
 	// here, and to be on the safe side, we will re-map on the C side in case Cplex changes.		
@@ -643,7 +626,7 @@ func OutputToScreen(echoOn bool) error {
 // In case of failure, it returns an error including the error code it received from Cplex. 
 // This function uses CPXchgprobname.
 func ChgProbName(Name string) error {
-	var status C.int
+	var status C.int    // Status returned from Cplex
 
 	if Name == "" {
 		Name = "ChangedDefaultName"
@@ -669,8 +652,7 @@ func ChgProbName(Name string) error {
 //		 1 - minimize
 //		-1 - maximize
 func ChgObjSen(sense int) error {
-
-	var status C.int
+	var status C.int   // Status returned from Cplex
 
 	// CPX_ON = 1, CPX_OFF = 0, but unfortunately we can't call these constants
 	// here, and to be on the safe side, we will re-map on the C side in case Cplex changes.
@@ -703,12 +685,12 @@ func ChgObjSen(sense int) error {
 //	between rList[i].Rhs and (rList[i].Rhs + rList[i].RngVal). For all other cases,
 //	RngVal is set to zero.
 func NewRows(rList []InputRow) error {
-	var nameArray  []string	
-	var cChar        C.char
-	var cCharArray []C.char
-	var status       C.int
-	var cRhs       []C.double
-	var cRngVal    []C.double
+	var nameArray  []string	    // Array of row names passed to Cplex
+	var cChar        C.char     // Temporary variable for processing C chars
+	var cCharArray []C.char     // Char array needed for C functions
+	var status       C.int      // Status returned from Cplex
+	var cRhs       []C.double   // RHS value passed to Cplex
+	var cRngVal    []C.double   // Range values passed to Cplex
 
 
 	if len(rList) < 1 {
@@ -763,12 +745,12 @@ func NewRows(rList []InputRow) error {
 //	continuous variables, it will fail with a CPXERR_NOT_FOR_MIP error. 
 func NewCols(objList []InputObjCoef, cList []InputCol) error {
 
-	var nameArray  []string	
-	var cChar        C.char
-	var status       C.int
-	var cCharArray []C.char
-	var lb, ub     []C.double
-	var isMip        C.int 
+	var nameArray  []string	    // Array of column names
+	var cChar        C.char     // Temporary variable for processing C chars
+	var status       C.int      // Status returned from Cplex
+	var cCharArray []C.char     // Column names passed to Cplex     
+	var lb, ub     []C.double   // Upper and lower bounds of cols passed to Cplex
+	var isMip        C.int      // Flag set to true if problem is a MIP 
 
 	// The column list must be provided. 
 	if len(cList) < 1 {
@@ -833,9 +815,9 @@ func NewCols(objList []InputObjCoef, cList []InputCol) error {
 // This function uses CPXchgcoeflist.
 func ChgCoefList(eList []InputElem) error {
 
-	var rowlist, collist []C.int
-	var vallist []C.double
-	var status C.int
+	var rowlist, collist []C.int     // Arrays of indices for rows and columns
+	var vallist          []C.double  // Array of coefficient values 
+	var status             C.int     // Status returned from Cplex
 		
 	if len(eList) < 1 {
 		return errors.Errorf("ChgCoefList expected more than %d elements", len(eList))			
@@ -870,8 +852,7 @@ func ChgCoefList(eList []InputElem) error {
 // of any other variable type will cause this function to fail with a CPXERR_NOT_FOR_MIP
 // error.
 func LpOpt() error {
-
-	var status C.int
+	var status C.int     // Status returned from Cplex
 	
 	status = C.cLpOpt()
 	if status != 0 {
@@ -888,8 +869,7 @@ func LpOpt() error {
 // In case of failure, it returns an error including the error code it received from Cplex. 
 // This function uses CPXmipopt.
 func MipOpt() error {
-
-	var status C.int
+	var status C.int  // Status returned from Cplex
 	
 	status = C.cMipOpt()
 	if status != 0 {
@@ -908,10 +888,10 @@ func MipOpt() error {
 // in order to populate the solution data structures passed back to the user.
 func GetSolution(objVal *float64, sRows *[]SolnRow, sCols *[]SolnCol) error {
 
-	var cObjVal  C.double
-	var status   C.int
-	var numRows  C.int
-	var numCols  C.int
+	var cObjVal  C.double   // Objective function value returned by Cplex
+	var status   C.int      // Status returned by Cplex
+	var numRows  C.int      // Number of rows in the Cplex model
+	var numCols  C.int      // Number of columns in the Cplex model
 	
 	var curCol SolnCol
 	var curRow SolnRow
@@ -970,8 +950,8 @@ func GetSolution(objVal *float64, sRows *[]SolnRow, sCols *[]SolnCol) error {
 // CPXgetnumcols, CPXgetrowname, CPXgetcolname, CPXgetobjval, CPXgetslack, and CPXgetx.
 func GetMipSolution(objVal *float64, sRows *[]SolnRow, sCols *[]SolnCol) error {
 
-	var numRows, numCols  int
-	var err error
+	var numRows, numCols  int  // Number of rows and columns in the model
+	var err             error  // Error returned by the functions called
 
 	// Initialize the return values
 	*sRows  = nil
@@ -1023,7 +1003,7 @@ func GetMipSolution(objVal *float64, sRows *[]SolnRow, sCols *[]SolnCol) error {
 // nil (success).
 // This function uses CPXgetnumrows. 
 func GetNumRows(numRows *int) error {
-	var cNumRows C.int
+	var cNumRows C.int      // Number of rows in the Cplex model
 	
 	_ = C.cGetNumRows(&cNumRows)
 
@@ -1039,7 +1019,7 @@ func GetNumRows(numRows *int) error {
 // nil (success).
 // This function uses CPXgetnumcols. 
 func GetNumCols(numCols *int) error {
-	var cNumCols C.int
+	var cNumCols C.int    // Number of columns in the Cplex model
 	
 	_ = C.cGetNumCols(&cNumCols)
 
@@ -1055,8 +1035,8 @@ func GetNumCols(numCols *int) error {
 // from Cplex.
 // This function uses CPXgetobjval.
 func GetObjVal(objVal *float64) error {
-	var cObjVal C.double
-	var status  C.int
+	var cObjVal C.double    // Objective function value calculated by Cplex
+	var status  C.int       // Status returned by Cplex
 
 	*objVal = 0
 		
@@ -1079,7 +1059,10 @@ func GetObjVal(objVal *float64) error {
 // from Cplex.
 // This function uses CPXgetnumcols and CPXgetcolname.
 func GetColName(sCols []SolnCol) error {
-	var numCols, status, surplus, colSpace C.int
+	var numCols  C.int   // Number of columns in the model
+	var surplus  C.int   // Parameter from Cplex needed to calculate size of name array
+	var colSpace C.int   // Parameter needed by Cplex to get the column names
+	var status   C.int   // Status returned from Cplex
 
 	// Get actual number of columns and allocate memory for solution.
 	_ = C.cGetNumCols(&numCols)
@@ -1127,7 +1110,10 @@ func GetColName(sCols []SolnCol) error {
 // from Cplex.
 // This function uses CPXgetnumrows and CPXgetrowname.
 func GetRowName(sRows []SolnRow) error {
-	var numRows, status, surplus, rowSpace C.int
+	var numRows  C.int  // Number of rows in the model
+	var surplus  C.int  // Parameter from Cplex needed to calculate size of name array
+	var rowSpace C.int  // Parameter needed by Cplex to get row names
+	var status   C.int  // Status returned by Cplex
 
 	// Get actual number of rows and allocate memory for solution.
 	_ = C.cGetNumRows(&numRows)
@@ -1175,8 +1161,9 @@ func GetRowName(sRows []SolnRow) error {
 // from Cplex.
 // This function uses CPXgetnumcols and CPXgetx.
 func GetX(sCols []SolnCol) error {
-	var cNumCols, status C.int
-	var numCols int
+	var cNumCols  C.int   // Number of columns in C int format
+	var status    C.int   // Status returned by Cplex
+	var numCols     int   // Number of columns in Go int format
 
 	// Get actual number of columns and allocate memory for solution.
 	_ = C.cGetNumCols(&cNumCols)
@@ -1213,8 +1200,9 @@ func GetX(sCols []SolnCol) error {
 // from Cplex.
 // This function uses CPXgetnumrows and CPXgetslack.
 func GetSlack(sRows []SolnRow) error {
-	var cNumRows, status C.int
-	var numRows int
+	var cNumRows  C.int  // Number of rows in C int format
+	var status    C.int  // Status returned by Cplex
+	var numRows     int  // Number of rows in Go int format
 
 	// Get actual number of rows and allocate memory for solution.
 	_ = C.cGetNumRows(&cNumRows)
@@ -1249,7 +1237,7 @@ func GetSlack(sRows []SolnRow) error {
 // In case of failure, it returns an error including the error code it received from Cplex. 
 // This function uses CPXfreeprob and CPXcloseCPLEX.
 func CloseCplex() error {
-	var status C.int
+	var status C.int    // Status returned by Cplex
 		
 	status = C.cCloseCplex()
 	if status != 0 {
@@ -1272,7 +1260,7 @@ func CloseCplex() error {
 //		LP  - LP format
 func ReadCopyProb(fileName string, fileType string) error {
 
-	var status C.int
+	var status C.int  // Status returned by Cplex
 
 	cFileName := C.CString(fileName)
 	defer C.free(unsafe.Pointer(cFileName))
@@ -1306,7 +1294,7 @@ func ReadCopyProb(fileName string, fileType string) error {
 //		.gz  - files compressed with GNU Zip
 func WriteProb(fileName string, fileType string) error {
 
-	var status C.int
+	var status C.int  // Status returned by Cplex
 
 	cFileName := C.CString(fileName)
 	defer C.free(unsafe.Pointer(cFileName))
@@ -1330,7 +1318,7 @@ func WriteProb(fileName string, fileType string) error {
 // This function uses CPXwriteprob.
 func SolWrite(fileName string) error {
 	
-	var status C.int
+	var status C.int  // Status returned by Cplex
 
 	cFileName := C.CString(fileName)
 	defer C.free(unsafe.Pointer(cFileName))
