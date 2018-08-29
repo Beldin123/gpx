@@ -562,7 +562,7 @@ type SolnCol struct {
 // FUNCTIONS FOR CREATING THE PROBLEM
 //==============================================================================
 
-// NewProblem initializes the Cplex environment and creates a problem with the
+// CreateProb initializes the Cplex environment and creates a problem with the
 // name passed into this function. 
 // In case of failure, it returns an error including the error code it received from Cplex. 
 // This function uses CPXopenCPLEX, CPXsetintparam, and CPXcreateprob.
@@ -621,7 +621,7 @@ func OutputToScreen(echoOn bool) error {
 
 //==============================================================================
 
-// NewProblem initializes the Cplex environment and creates a problem with the
+// ChgProbName initializes the Cplex environment and creates a problem with the
 // name passed into this function.
 // In case of failure, it returns an error including the error code it received from Cplex. 
 // This function uses CPXchgprobname.
@@ -1311,7 +1311,7 @@ func WriteProb(fileName string, fileType string) error {
 
 //==============================================================================
 
-// WriteProb writes the current Cplex problem to the data file specified by its 
+// SolWrite writes the current Cplex problem to the data file specified by its 
 // name and type.
 // In case of failure, it returns an error including the error code it receives
 // from Cplex.
