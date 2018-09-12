@@ -3,9 +3,11 @@
 
 /*
 Package gpx ("Go for Cplex") provides an interface to a small subset of CPX 
-(C language) functions available in the CPLEX Callable Library. This package also 
-requires a copy of Cplex and a C compiler to be installed and configured. Package 
-gpx can be used from Go language programs to create linear programming or 
+(C language) functions available in the CPLEX Callable Library. It is complementary to,
+but independent of the lpo ("linear programming object") package.
+
+The gpx package requires a copy of Cplex and a C compiler to be installed and configured. 
+It can be used from Go language programs to create linear programming or 
 mixed-integer linear programming models, or read them from files, modify them, 
 solve them, and obtain the solution results. It can also be used from the lpo package 
 (https://github.com/go-opt/lpo), which has a number of routines for retrieving 
