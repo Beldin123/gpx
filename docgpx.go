@@ -2,7 +2,7 @@
 
 
 /*
-Package gpx ("Go for Cplex") provides an interface to a small subset of CPX 
+Package gpx ("linear programming Go for Cplex") provides an interface to a small subset of CPX 
 (C language) functions available in the CPLEX Callable Library. It is complementary to,
 but independent of the lpo ("linear programming object") package.
 
